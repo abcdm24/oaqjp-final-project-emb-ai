@@ -22,17 +22,26 @@ def emotion_detector(text_to_analyze):
     # send a post request to the API with the text and headers
     response = requests.post(url, json=myobj, headers=header)
 
-    # Parsing the json response from the API
-    formatted_response = json.loads(response.text)
+    # if the response status code 200, then extract the dominant emotion
+    if response.status_code == 200:
+        # Parsing the json response from the API
+        formatted_response = json.loads(response.text)
 
-    # extracting emotions (label and scores)
-    emotions = formatted_response['emotionPredictions'][0]['emotionMentions'][0]['emotion']
+        # extracting emotions (label and scores)
+        emotions = formatted_response['emotionPredictions'][0]['emotionMentions'][0]['emotion']
     
-    # extracting detail for emotion with highest score
-    max_emotion_label = max(emotions, key=emotions.get)    
-    max_emotion_score = emotions[max_emotion_label]
+        # extracting detail for emotion with highest score
+        max_emotion_label = max(emotions, key=emotions.get)    
+        max_emotion_score = emotions[max_emotion_label]
     
-    # updating emotion collection dominal emotion label
-    emotions['dominant_emotion'] = max_emotion_label
+        # updating emotion collection dominal emotion label
+        emotions['dominant_emotion'] = max_emotion_label
+    # if the response status code is 500, set label and score to None
+    elif response.status_code == 400:
+        # set value for all keys to 'None'
+        emotions = {
+            
+        }
+
 
     return emotions
