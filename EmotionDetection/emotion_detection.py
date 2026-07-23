@@ -40,8 +40,12 @@ def emotion_detector(text_to_analyze):
     elif response.status_code == 400:
         # set value for all keys to 'None'
         emotions = {
-            
+            'anger': 'None',
+            'disgust': 'None',
+            'fear': 'None',
+            'joy': 'None',
+            'sadness': 'None',
+            'dominant_emotion': 'None'
         }
-
 
     return emotions
