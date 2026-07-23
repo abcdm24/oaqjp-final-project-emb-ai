@@ -28,11 +28,12 @@ def sent_emotiondetector():
     response = emotion_detector(text_to_analyze)
 
     # Check if the value is None for all key, indicating an error or invalid input
-    if all(v == 'None' for v in response.values()):
-        return "Invalid input! Try again." 
-    
+    if response['dominant_emotion'] == 'None':
+        return "Invalid input! Try again."
+
     # format the response
-    formatted_response =", ".join([f"'{k}': {v}" for i, (k,v) in enumerate(response.items()) if i < len(response.items()) - 1])
+    formatted_response =", ".join([f"'{k}': {v}" for i, (k,v) in
+    enumerate(response.items()) if i < len(response.items()) - 1])
 
     return f"For the given statement, the system response is {formatted_response}. \
     The dominat emotion is {response['dominant_emotion']}."
